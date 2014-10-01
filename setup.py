@@ -16,7 +16,7 @@
 
 from distutils.core import setup, Extension
 import sys
-import commands
+import subprocess
 
 long_description = """
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -40,8 +40,8 @@ setup (
     ext_modules = [
         Extension(
             "kerberos",
-            extra_link_args = commands.getoutput("krb5-config --libs gssapi").split(),
-            extra_compile_args = commands.getoutput("krb5-config --cflags gssapi").split(),
+            extra_link_args = subprocess.check_output(['krb5-config', '--libs', 'gssapi']).split(),
+            extra_compile_args = subprocess.check_output(['krb5-config', '--cflags', 'gssapi']).split(),
             sources = [
                 "src/kerberos.c",
                 "src/kerberosbasic.c",
